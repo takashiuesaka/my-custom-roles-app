@@ -16,6 +16,12 @@ module.exports = async function (context, req) {
         }
     }
 
+    if (roles.length === 0) {
+        context.log('roles not found')
+    } else {       
+        roles.forEach(role => context.log('role: ' + role)
+    }
+
     context.res.json({
         roles
     });
