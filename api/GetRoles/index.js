@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
     if (claims) {
         claims.forEach(claim => {
             for (const [role, groupId] of Object.entries(roleGroupMappings)) {
-                if (claim.Typ === 'groups' && claim.Val === groupId) {
+                if (claim.typ === 'groups' && claim.val === groupId) {
                     roles.push(role);
                 }
             }
