@@ -10,14 +10,26 @@ module.exports = async function (context, req) {
     const user = req.body || {};
     const roles = [];
     
-    for (const [role, groupId] of Object.entries(roleGroupMappings)) {
-        if (await isUserInGroup(groupId, user.accessToken)) {
-            context.log('role mached! role: ' + role);
-            roles.push(role);
+//    for (const [role, groupId] of Object.entries(roleGroupMappings)) {
+//        if (await isUserInGroup(groupId, user.accessToken)) {
+//            context.log('role mached! role: ' + role);
+//            roles.push(role);
+//        }
+//    }
+
+    const claims = user.claims;
+
+    if (claims) {
+        claims.forEach(claim => {
+            for (const [role, groupId] of Object.entries(roleGroupMappings)) {
+                if (claim.Typ === 'groups' && claim.Val === groupId) {
+                    roles.push(role);
+                }
+            }
         }
     }
 
-    roles.push('admin')
+//    roles.push('admin')
     
     context.res.json({
         roles
