@@ -12,16 +12,11 @@ module.exports = async function (context, req) {
     
     for (const [role, groupId] of Object.entries(roleGroupMappings)) {
         if (await isUserInGroup(groupId, user.accessToken)) {
+            context.log('role mached! role: ' + role);
             roles.push(role);
         }
     }
-
-    if (roles.length === 0) {
-        context.log('roles not found')
-    } else {       
-        roles.forEach(role => context.log('role: ' + role)
-    }
-
+    
     context.res.json({
         roles
     });
